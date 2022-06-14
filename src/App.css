@@ -69,3 +69,7 @@
 .wordle-grid-letter-false {
  background-color: grey;
 }
+
+.key{
+  display: inline;
+}

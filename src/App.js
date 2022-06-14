@@ -2,7 +2,7 @@ import {useState} from "react";
 import './App.css';
 
 const defaultGuessList = [
-  ["R", "E", "A", "C", "T"],
+  ["", "", "", "", ""],
   ["", "", "", "", ""],
   ["", "", "", "", ""],
   ["", "", "", "", ""],
@@ -19,6 +19,7 @@ function App() {
         <WordleGrid 
           wordleGuessList={wordleGuessList}
         />
+        <Keyboard/>
       </header>
     </div>
   );
@@ -64,6 +65,33 @@ const WordleGridLetter = (props) => {
     </div>
   )
 }
+
+const Keyboard = () => 
+{
+    const keyboard_matrix = [
+      ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
+      ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', '@'],
+      ['z', 'x', 'c', 'v', 'b', 'n', 'm', 'Enter']
+    ];
+
+    return (
+      <div className='keyboard'>
+
+        {keyboard_matrix.map((row)=>
+        {
+          return (
+            row.map((key)=>
+            {
+              return(
+              <div className="key">{key}</div>
+          )})
+        )
+        })}
+      </div>
+    )
+}
+
+
 
 export default App;
 
