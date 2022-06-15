@@ -9,8 +9,15 @@ const defaultGuessList = [
   ["", "", "", "", ""],
   ["", "", "", "", ""],
 ]
+const keyboard_matrix = [
+  ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+  ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+  ["enter", "z", "x", "c", "v", "b", "n", "m", "backspace"]
+];
+
 
 function App() {
+
   const [wordleGuessList, setWordleGuessList] = useState([...defaultGuessList])
   return (
     <div className="App">
@@ -19,8 +26,9 @@ function App() {
         <WordleGrid 
           wordleGuessList={wordleGuessList}
         />
-        <Keyboard/>
+        
       </header>
+      <Keyboard keyboard={keyboard_matrix}/>
     </div>
   );
 }
@@ -66,27 +74,30 @@ const WordleGridLetter = (props) => {
   )
 }
 
-const Keyboard = () => 
+const KeyboardRow = (props) =>
 {
-    const keyboard_matrix = [
-      ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
-      ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', '@'],
-      ['z', 'x', 'c', 'v', 'b', 'n', 'm', 'Enter']
-    ];
+  return(
+    <div className="keyboardRow">
+      <br/>
+      {props.row.map((letter)=>
+      {
+        return <div className="letter">{letter}</div>
+      })}
+    </div>
 
+  )
+}
+const Keyboard = (props) => 
+{
+    
     return (
       <div className='keyboard'>
 
-        {keyboard_matrix.map((row)=>
+        {props.keyboard.map((row)=>
         {
-          return (
-            row.map((key)=>
-            {
-              return(
-              <div className="key">{key}</div>
-          )})
-        )
+           return <KeyboardRow row = {row} />
         })}
+     
       </div>
     )
 }
