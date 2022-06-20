@@ -1,34 +1,40 @@
 import {useState} from "react";
 import './App.css';
 
-const defaultGuessList = [
-  ["", "", "", "", ""],
-  ["", "", "", "", ""],
-  ["", "", "", "", ""],
-  ["", "", "", "", ""],
-  ["", "", "", "", ""],
-  ["", "", "", "", ""],
-]
-const keyboard_matrix = [
-  ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
-  ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
-  ["enter", "z", "x", "c", "v", "b", "n", "m", "backspace"]
-];
+// VARIABLES //
+let i=0;
+let j=0;
 
+
+
+
+
+// const [wordleGuessList, setWordleGuessList] = useState([...defaultGuessList])
+
+
+
+// COMPONENTS //
 
 function App() {
 
-  const [wordleGuessList, setWordleGuessList] = useState([...defaultGuessList])
+  const [defaultGuessList, setDefaultGuessList] = useState ([
+    ["", "", "", "", ""],
+    ["", "", "", "", ""],
+    ["", "", "", "", ""],
+    ["", "", "", "", ""],
+    ["", "", "", "", ""],
+    ["", "", "", "", ""],
+  ])
+l(defaultGuessList)
   return (
     <div className="App">
       <header className="App-header">
         <WordleHeader /> 
         <WordleGrid 
-          wordleGuessList={wordleGuessList}
+           defaultGuessList={defaultGuessList}
         />
-        
       </header>
-      <Keyboard keyboard={keyboard_matrix}/>
+      <Keyboard defaultGuessList={defaultGuessList} setDefaultGuessList={setDefaultGuessList}/>
     </div>
   );
 }
@@ -45,7 +51,7 @@ const WordleGrid = (props) => {
   // const { wordleGuessList } = props;
   return (
     <div className="wordle-grid">
-      {props.wordleGuessList.map((wordleGuess)=>{
+      {props.defaultGuessList.map((wordleGuess)=>{
         return (
           <WordleGridRow wordleGuess={wordleGuess}/> 
         )
@@ -81,7 +87,7 @@ const KeyboardRow = (props) =>
       <br/>
       {props.row.map((letter)=>
       {
-        return <div className="letter">{letter}</div>
+        return <div className="letter" onClick={()=>{AddLetter(letter, props.defaultGuessList, props.setDefaultGuessList)}} >{letter}</div>
       })}
     </div>
 
@@ -89,13 +95,18 @@ const KeyboardRow = (props) =>
 }
 const Keyboard = (props) => 
 {
+  const keyboard_matrix = [
+    ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+    ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+    ["enter", "z", "x", "c", "v", "b", "n", "m", "backspace"]
+  ];
     
     return (
       <div className='keyboard'>
 
-        {props.keyboard.map((row)=>
+        {keyboard_matrix.map((row)=>
         {
-           return <KeyboardRow row = {row} />
+           return <KeyboardRow row = {row} defaultGuessList={props.defaultGuessList} setDefaultGuessList ={props.setDefaultGuessList}/>
         })}
      
       </div>
@@ -103,6 +114,47 @@ const Keyboard = (props) =>
 }
 
 
+
+// FUNCTIONS //
+function AddLetter(key_pressed,guessList, setDefaultGuessList) 
+{
+
+    let new_guessList = [...guessList]
+
+    if(key_pressed== 'backspace')
+    {
+      j-=1;
+      new_guessList[i][j] =''
+
+      setDefaultGuessList(new_guessList)
+      return
+    }
+    new_guessList[i][j]=key_pressed;
+
+    if(j<4) 
+    {
+      j+=1;
+    }
+    else
+    {
+      //test word
+      j=0; 
+
+      if(i<5)i+=1;
+      if(i==5)l('GAMEOVER')
+      
+    }
+
+    console.log(new_guessList)
+    setDefaultGuessList(new_guessList)
+
+  
+  
+}
+
+function l(params) {
+  console.log(params)
+}
 
 export default App;
 
