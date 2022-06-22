@@ -9,10 +9,6 @@ let j=0;
 
 
 
-// const [wordleGuessList, setWordleGuessList] = useState([...defaultGuessList])
-
-
-
 // COMPONENTS //
 
 function App() {
@@ -118,6 +114,7 @@ const Keyboard = (props) =>
 // FUNCTIONS //
 function AddLetter(key_pressed,guessList, setDefaultGuessList) 
 {
+  const CORRECT_ANSWER = 'while'
 
     let new_guessList = [...guessList]
 
@@ -137,7 +134,14 @@ function AddLetter(key_pressed,guessList, setDefaultGuessList)
     }
     else
     {
-      //test word
+      //check answser
+      if(new_guessList[i].join('')==CORRECT_ANSWER)
+      {
+        l('you win')
+      }
+
+      // for
+
       j=0; 
 
       if(i<5)i+=1;
